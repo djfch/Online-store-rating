@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>PC机器人聊天界面</title>
+<style>
+.box{
+	width: 100%;
+	height: 500px;
+	position:absolute;
+	top:0;
+}
+#content{
+	width: 98%;
+	height: 500px;
+	margin-right:1%;
+	margin-left:1%;
+}
+form{
+	width: 100%;
+	height:60px;
+	line-height:40px;
+	border-top:1px solid #ccc; 
+	position:absolute;
+	bottom:0;
+	left:0;
+}
+#content form img{
+	border:1px solid #ccc;
+	border-radius:7px;
+	padding:2px; 
+	cursor:pointer;
+	margin:5px 0 0 5px;
+	float:left;
+	width:40px;
+	height:40px;
+}
+#content form input[type='text']{
+	width:80%;
+	height:40px;
+	line-height:27px;
+	border-radius:7px; 
+	border:1px solid #ccc;
+	float:left;
+	margin-left:5px; 
+	margin-top:5px; 
+	outline:none;
+	padding:0 5px; 
+}
+#content form input[type='button']{
+	width:12%;
+	height: 40px;
+	border-radius:5px; 
+	background:#fff;
+	border:none;
+	margin-left:1%; 
+	cursor:pointer;
+	font-size:27px;
+	margin-top:5px;
+}
+
+.info_box{
+	width: 100%;
+	height:440px;
+	overflow-y:auto;
+}
+.info_box::-webkit-scrollbar {display:none}
+.info_box div{
+	margin:0 0 5px;
+	position:relative;
+}
+.info_box .info_r{
+	
+}
+.info_box .info_l{
+
+}
+.info_box .info_l img{
+	position:absolute;
+	left:0;
+	top:0;
+}
+.info_box .info_r img{
+	position:absolute;
+	right:0;
+	top:0;
+}
+.info_box .info_l span{margin-left: 60px;margin-top:16px;}
+.info_box .info_r span{margin-left:28%;margin-top:16px;}
+
+
+.info_box span{
+	width: 66%;
+	height: auto;
+	font-size:14px;
+	background:#ddd;
+	border-radius: 10px;
+	padding:8px;  
+	color:#333;
+	display: block;
+	position:relative;
+	top:0;
+}
+
+
+.info_box .info_l img{
+	float:left;
+	width:50px;
+    height:50px;
+}
+
+
+
+.info_r img{
+	float:right;
+	width:50px;
+    height:50px;
+}
+
+
+
+</style>
+</head>
+<body>
+<div class="box">
+	<div id="content">
+		<div class="info_box">
+		
+			 <div class="info_r">
+					<img src="static/img/2.jpg" class='pic_r'>
+					<span class='infor'>《基于深度学习的智能网店打分系统》使用本程序的方法如下：找到您想进行评分的店铺并复制链接，点击发送后程序会根据评论进行情感分析并计算评分。</span>
+				</div> 	
+			 <div class="info_l">
+				<img src="static/img/1.jpg" class='pic_l'>
+				<span class='infoo'>在您开始之前，这里提醒您此评分仅供参考，暂时我们只支持饿了吗店铺，后续功能继续升级中，敬请期待！</span>
+			</div>	 
+			
+		</div>
+		<form action="">
+			<input type="text" name="x" placeholder='尽情畅聊吧' id='inp'>
+			<input type="button" value='发送' id='send'>
+            <img src="static/img/2.jpg" id='pic'>
+            
+		</form>
+		<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	</div>
+</div>
+
+
+<script>
+
+
+var send =document.getElementById('send');
+var pic =document.getElementById('pic');
+var txt =document.getElementById('inp');
+var info_box = document.getElementsByClassName('info_box')[0];
+
+var onoff=true;
+
+
+//原
+pic.onclick=function(){
+	if(onoff){
+		pic.src='static/img/2.jpg';
+		onoff=false;
+	}
+	else{
+		pic.src='static/img/1.jpg';
+		onoff=true;
+	}
+};
+function chat1(data1){
+	txt.value='';
+	var nDiv = document.createElement('div');
+		var spans = document.createElement('span');
+		var imgs = document.createElement('img');
+		var sTxt = document.createTextNode(data1);
+		var info_box = document.getElementsByClassName('info_box')[0];
+		spans.appendChild(sTxt);
+		nDiv.appendChild(spans);
+		nDiv.appendChild(imgs);
+		// nDiv.style.display='block'; 
+		info_box.insertBefore(nDiv,info_box.lastChild);
+		spans.className='infor';
+	    nDiv.className='info_r';
+	    imgs.src='static/img/2.jpg';
+}
+
+function chat2(res){
+		
+		var nDiv = document.createElement('div');
+		var spans = document.createElement('span');
+		var imgs = document.createElement('img');
+		//var ms=document.createTextNode({{data}}); 
+		var sTxt = document.createTextNode(res);  //变量
+		var info_box = document.getElementsByClassName('info_box')[0];
+		spans.appendChild(sTxt);
+		nDiv.appendChild(spans);
+		nDiv.appendChild(imgs);
+		// nDiv.style.display='block';
+		info_box.insertBefore(nDiv,info_box.lastChild);
+	    spans.className='infol';
+		nDiv.className='info_l';
+		imgs.src='static/img/1.jpg';
+}
+
+send.onclick=function(){
+	
+	if(txt.value===''){
+		alert('请输入内容');
+	}
+	
+	else{
+		
+		var data1=txt.value;
+		document.getElementById('inp').value='';
+		chat1(data1);
+			var input = {
+                'name': 'tom',
+                'password': '123456'
+            };
+            $.ajax({
+                url: '/addUser',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(data1),
+                success: function (res) {
+					chat2(res);
+					//alert($("div").scrollTop(5000)+100);
+					$("div").scrollTop(1000);      //滑动页面，但达到1000后会不再下滑，考虑当前位置添加偏移量
+                    console.log(res);
+                }
+				
+            });
+		
+	    
+
+/*
+		if(onoff==true){
+			spans.className='infor';
+			nDiv.className='info_r';
+			imgs.src='img/2.png';
+		}
+		if(onoff==false){
+			spans.className='infol';
+			nDiv.className='info_l';
+			imgs.src='img/1.png';
+		}
+*/
+	}
+	
+}
+
+
+</script>
+	
+</body>
+</html>
